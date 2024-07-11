@@ -1,4 +1,4 @@
-from app import add, multiply
+from app.operations import add, multiply
 
 def test_add():
     assert add(2,2) == 4
