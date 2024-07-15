@@ -6,8 +6,7 @@ and printing functionality.
 """
 
 import pytest
-# from app.utils import print_it
-# from app.operations import add, multiply
+from unittest.mock import patch
 from app.main import main
 
 def test_main_integration(capsys):
@@ -17,58 +16,49 @@ def test_main_integration(capsys):
     This test ensures that the main function correctly integrates
     the add, multiply, and print_it functions, producing the expected output.
     """
-    # Call the main function
-    main()
+    # Mock the input function to simulate user input
+    with patch('builtins.input', side_effect=['1', '2', '3', 'q']):
+        main()
 
     # Capture the printed output
     captured = capsys.readouterr()
 
     # Define the expected output
     expected_output = (
-        "Add 2 + 2 is equal to 4\n"
-        "Multiply 2 * 2 is equal to 4\n"
+        "\nPlease choose an operation:\n"
+        "1. Addition\n"
+        "2. Multiplication\n"
+        "q. Quit\n"
+        "Add 2.0 + 3.0 is equal to 5.0\n"
+        "\nPlease choose an operation:\n"
+        "1. Addition\n"
+        "2. Multiplication\n"
+        "q. Quit\n"
+        "Thank you for using the calculator. Goodbye!\n"
     )
 
     # Assert that the captured output matches the expected output
     assert captured.out == expected_output
 
+@pytest.mark.integration
+def test_main_integration_multiplication(capsys):
+    with patch('builtins.input', side_effect=['2', '4', '6', 'q']):
+        main()
+    captured = capsys.readouterr()
+    assert "Multiply 4.0 * 6.0 is equal to 24.0" in captured.out
 
-# def test_add_integration():
-#     """
-#     Test the integration of the add function with string formatting.
+@pytest.mark.integration
+def test_main_integration_invalid_choice(capsys):
+    with patch('builtins.input', side_effect=['3', '1', '2', '3', 'q']):
+        main()
+    captured = capsys.readouterr()
+    assert "Invalid choice. Please try again." in captured.out
+    assert "Add 2.0 + 3.0 is equal to 5.0" in captured.out
 
-#     This test ensures that the add function produces the correct result
-#     and that the result is correctly formatted into a string.
-#     """
-#     result = add(2, 2)
-#     formatted_result = f'Add 2 + 2 is equal to {result}'
-#     assert formatted_result == 'Add 2 + 2 is equal to 4'
-
-
-# def test_multiply_integration():
-#     """
-#     Test the integration of the multiply function with string formatting.
-
-#     This test ensures that the multiply function produces the correct result
-#     and that the result is correctly formatted into a string.
-#     """
-#     result = multiply(2, 2)
-#     formatted_result = f'Multiply 2 * 2 is equal to {result}'
-#     assert formatted_result == 'Multiply 2 * 2 is equal to 4'
-
-
-# def test_print_it_integration(capsys):
-#     """
-#     Test the integration of the print_it function.
-
-#     This test ensures that the print_it function correctly prints
-#     the given string to the console.
-#     """
-#     test_string = "Test message"
-#     print_it(test_string)
-#     captured = capsys.readouterr()
-#     assert captured.out.strip() == test_string
-
-
-if __name__ == '__main__':
-    pytest.main()
+@pytest.mark.integration
+def test_main_integration_invalid_number(capsys):
+    with patch('builtins.input', side_effect=['1', 'abc', '2', '3', '4', 'q']):
+        main()
+    captured = capsys.readouterr()
+    assert "Invalid input. Please enter valid numbers." in captured.out
+    assert "Add 2.0 + 3.0 is equal to 5.0" in captured.out

@@ -9,18 +9,6 @@ from app.utils import print_it
 # Define a test function named test_print_it
 # The 'capsys' parameter is a pytest fixture that captures stdout and stderr
 def test_print_it(capsys):
-    # Define a test string that will be passed to the print_it function
-    test_text = "Hello, world!"
-    
-    # Call the print_it function with the test string
-    # This is the function we're testing
-    print_it(test_text)
-    
-    # Use the capsys fixture to capture the output that was printed
-    # readouterr() returns a named tuple with 'out' and 'err' attributes
+    print_it("Test message")
     captured = capsys.readouterr()
-    
-    # Assert that the captured output, with whitespace stripped from the ends,
-    # is equal to our original test string
-    # This verifies that print_it correctly printed the string we provided
-    assert captured.out.strip() == test_text
+    assert captured.out.strip() == "Test message"
