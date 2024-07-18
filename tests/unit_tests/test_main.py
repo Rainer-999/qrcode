@@ -4,7 +4,7 @@ This module contains unit tests for the main program logic.
 
 import pytest
 from unittest.mock import patch
-from app.main import get_user_choice, get_numbers
+from app.user_interactions import get_user_choice, get_numbers
 from app.operations import add, multiply
 
 def test_get_user_choice_valid():
