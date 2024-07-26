@@ -16,7 +16,7 @@ def get_user_choice():
         print_it(options)
         choice = input("Enter your choice (1/2/3/4/q): ").lower()
         print(f"DEBUG: User choice: {choice}")
-        if choice in ['1', '2', '3', '4', 'q']:
+        if choice in ["1", "2", "3", "4", "q"]:
             return choice
         print_it("Invalid choice. Please try again.")
 
@@ -39,16 +39,16 @@ def get_numbers():
 
 def perform_calculation(operation, a, b):
     try:
-        if operation == '1':
-            return Calculator.add(a, b), 'Addition'
-        elif operation == '2':
-            return Calculator.multiply(a, b), 'Multiplication'
-        elif operation == '3':
-            return Calculator.subtract(a, b), 'Subtraction'
-        elif operation == '4':
+        if operation == "1":
+            return Calculator.add(a, b), "Addition"
+        elif operation == "2":
+            return Calculator.multiply(a, b), "Multiplication"
+        elif operation == "3":
+            return Calculator.subtract(a, b), "Subtraction"
+        elif operation == "4":
             if b == 0:
                 raise ValueError("Cannot divide by zero")
-            return Calculator.divide(a, b), 'Division'
+            return Calculator.divide(a, b), "Division"
         else:
             raise ValueError("Invalid operation")
     except Exception as e:
@@ -59,16 +59,17 @@ def perform_calculation(operation, a, b):
 def main():
     while True:
         choice = get_user_choice()
-        if choice == 'q':
+        if choice == "q":
             print_it("Thank you for using the calculator. Goodbye!")
             break
         num1, num2 = get_numbers()
-        print_it(f"DEBUG: Performing calculation with choice {choice}, "
-                 f"numbers {num1} and {num2}")
+        print_it(
+            f"DEBUG: Performing calculation with choice {choice}, "
+            f"numbers {num1} and {num2}"
+        )
         result, operation = perform_calculation(choice, num1, num2)
         if result is not None:
-            message = (f'{operation} of {num1} and {num2} '
-                       f'is equal to {result}')
+            message = f"{operation} of {num1} and {num2} " f"is equal to {result}"
             print_it(message)
         else:
             print_it("Calculation failed. Please try again.")

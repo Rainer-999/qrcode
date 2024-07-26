@@ -5,10 +5,9 @@ It tests the integration of arithmetic operations, string formatting,
 and printing functionality.
 """
 
-import pytest
 from app.utils import print_it
 from app.operations import add, multiply
-from app.main import main  # Replace 'your_main_module' with the actual module name
+from app.main import main
 
 
 def test_main_integration(capsys):
@@ -25,11 +24,8 @@ def test_main_integration(capsys):
     captured = capsys.readouterr()
 
     # Define the expected output
-    expected_output = (
-        "Add 2 + 2 is equal to 4\n"
-        "Multiply 2 * 2 is equal to 4\n"
-    )
-
+    expected_output = "Add 2 + 2 is equal to 4\n"
+    expected_output += "Multiply 2 * 2 is equal to 4\n"
     # Assert that the captured output matches the expected output
     assert captured.out == expected_output
 
@@ -42,8 +38,8 @@ def test_add_integration():
     and that the result is correctly formatted into a string.
     """
     result = add(2, 2)
-    formatted_result = f'Add 2 + 2 is equal to {result}'
-    assert formatted_result == 'Add 2 + 2 is equal to 4'
+    formatted_result = f"Add 2 + 2 is equal to {result}"
+    assert formatted_result == "Add 2 + 2 is equal to 4"
 
 
 def test_multiply_integration():
@@ -54,8 +50,8 @@ def test_multiply_integration():
     and that the result is correctly formatted into a string.
     """
     result = multiply(2, 2)
-    formatted_result = f'Multiply 2 * 2 is equal to {result}'
-    assert formatted_result == 'Multiply 2 * 2 is equal to 4'
+    formatted_result = f"Multiply 2 * 2 is equal to {result}"
+    assert formatted_result == "Multiply 2 * 2 is equal to 4"
 
 
 def test_print_it_integration(capsys):
@@ -69,7 +65,3 @@ def test_print_it_integration(capsys):
     print_it(test_string)
     captured = capsys.readouterr()
     assert captured.out.strip() == test_string
-
-
-if __name__ == '__main__':
-    pytest.main()
