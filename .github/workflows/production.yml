@@ -11,6 +11,10 @@ env:
   DOCKER_IMAGE: kaw393939/calc_basic
   PYTHON_VERSION: "3.10"
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -76,15 +80,18 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.14.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ env.DOCKER_IMAGE }}:${{ github.sha }}'
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
