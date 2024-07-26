@@ -39,7 +39,12 @@ def test_get_user_choice_invalid():
         ("4", 8, 2, 4, "Division"),
     ],
 )
-def test_perform_calculation(operation, a, b, expected_result, expected_operation):
+def test_perform_calculation(
+    operation,
+    a,
+    b,
+    expected_result,
+        expected_operation):
     result, operation_name = perform_calculation(operation, a, b)
     assert result == expected_result
     assert operation_name == expected_operation
