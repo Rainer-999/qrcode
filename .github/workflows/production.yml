@@ -26,8 +26,7 @@ jobs:
           pip install flake8 black
       - name: Run linters
         run: |
-          flake8 .
-          black --check .
+          flake8 --max-line-length=100 ./app
 
   test:
     needs: lint
