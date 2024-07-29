@@ -138,3 +138,6 @@ cython_debug/
 
 # JupyterLab
 .jupyterlab-config
+
+# codes
+codes
